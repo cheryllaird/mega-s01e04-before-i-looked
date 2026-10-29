@@ -32,6 +32,14 @@ function rowText(html: string, job: string) {
   return stripMarkup(row ?? '');
 }
 
+function renderedJobOrder(html: string) {
+  const tbody = html.match(/<tbody\b[^>]*>([\s\S]*?)<\/tbody>/i)?.[1] ?? '';
+  return [...tbody.matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi)].map((match) => {
+    const firstCell = match[1]?.match(/<td\b[^>]*>([\s\S]*?)<\/td>/i)?.[1] ?? '';
+    return stripMarkup(firstCell);
+  });
+}
+
 function stripMarkup(value: string) {
   return value
     .replace(/<[^>]*>/g, ' ')
@@ -106,10 +114,7 @@ describe('digest routes', () => {
       counts: { ok: 2, retry: 3, fail: 1 },
     });
 
-    const renderedRows = ['alpha', 'gamma', 'zeta'].map((job) => rowText(html, job));
-    expect(renderedRows.map((row) => ['alpha', 'gamma', 'zeta'].find((job) => row.includes(job)))).toEqual(
-      digest.rows.map((row: { job: string }) => row.job),
-    );
+    expect(renderedJobOrder(html)).toEqual(digest.rows.map((row: { job: string }) => row.job));
     expect(rowText(html, 'alpha')).toContain('3');
     expect(rowText(html, 'alpha')).toContain('fail');
     expect(rowText(html, 'gamma')).toContain('—');
@@ -162,7 +167,9 @@ describe('digest routes', () => {
 
     expect(page.status).toBe(200);
     expect(api.status).toBe(200);
-    expect(await api.json()).toEqual({
+    const digest = await api.json();
+    const html = await page.text();
+    expect(digest).toEqual({
       night,
       rows: [
         {
@@ -179,8 +186,8 @@ describe('digest routes', () => {
       badLines: 2,
       counts: { ok: 1, retry: 0, fail: 0 },
     });
-    expect(await page.text()).toContain('still-ran');
-    expect(await page.text()).toContain('2');
-    expect(await page.text()).toContain('2026-10-28T08:30:00-04:00');
+    expect(html).toContain('still-ran');
+    expect(html).toContain('bad lines: 2');
+    expect(html).toContain('2026-10-28T08:30:00-04:00');
   });
 });
