@@ -1,8 +1,9 @@
 ---
 plan: morning-digest
-status: ready
+status: done
 owner: rook
 opened: 2026-10-29
+closed: 2026-10-29
 ---
 
 # Morning digest
@@ -77,3 +78,18 @@ page again with `LANE_MARKER` unset (the banner reads "no marker set") and uploa
 link. Move this plan to `docs/plans/done/` with its issue list.
 
 Done when: the preview link no longer shows the lane marker.
+
+## Issues
+
+| # | Issue | Blocked by | Worker | Closed |
+|---|-------|-----------|--------|--------|
+| 1 | [Contract](https://github.com/cheryllaird/mega-s01e04-before-i-looked/issues/1) | — | Codex · gpt-6-astra · high | 2026-10-29 |
+| 2 | [Reader](https://github.com/cheryllaird/mega-s01e04-before-i-looked/issues/2) | #1 | Codex · gpt-6-astra · high | 2026-10-29 |
+| 3 | [Page](https://github.com/cheryllaird/mega-s01e04-before-i-looked/issues/3) | #1 | Codex · gpt-6-luna · high | 2026-10-29 |
+| 4 | [JSON](https://github.com/cheryllaird/mega-s01e04-before-i-looked/issues/4) | #1 | Codex · gpt-6-luna · high | 2026-10-29 |
+| 5 | [Board](https://github.com/cheryllaird/mega-s01e04-before-i-looked/issues/5) | #1 | Codex · gpt-6-luna · high | 2026-10-29 |
+| 6 | [Route tests](https://github.com/cheryllaird/mega-s01e04-before-i-looked/issues/6) | #1 | Codex · gpt-6-luna · high | 2026-10-29 |
+| 7 | [Reviewed public preview](https://github.com/cheryllaird/mega-s01e04-before-i-looked/issues/7) | #2–#6 | parent Codex · model/effort not exposed | 2026-10-29 |
+| 8 | [Marker removal and archive](https://github.com/cheryllaird/mega-s01e04-before-i-looked/issues/8) | #7 | Codex · gpt-6-luna · high | 2026-10-29 |
+
+Verification: 21 tests and typecheck passed; review confirmed before final cleanup; stable preview verified unmarked.
